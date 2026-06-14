@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>META GAMA - Beranda</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        /* --- RESET & VARIABLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #839b4d;
+            --bg-gray: #f9f9f9;
+            --text-dark: #222;
+            --text-gray: #666;
+            --border-color: #eee;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #ffffff;
+            color: var(--text-dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* --- HEADER --- */
+        header {
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 0;
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo img {
+            height: 45px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .main-menu {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-gray);
+        }
+
+        .main-menu a:hover,
+        .main-menu .active {
+            color: var(--primary-green);
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 15px;
+            font-size: 18px;
+            color: var(--text-dark);
+            align-items: center;
+        }
+
+        .icon-badge-wrap {
+            position: relative;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .icon-badge-wrap:hover {
+            color: var(--primary-green);
+        }
+
+        .badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--primary-green);
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            background: var(--bg-gray);
+            padding: 100px 20px;
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .hero-text {
+            flex: 1;
+            min-width: 300px;
+            max-width: 600px;
+        }
+
+        .hero-subtitle {
+            color: var(--primary-green);
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 13px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .hero-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            line-height: 1.2;
+            color: #111;
+            margin-bottom: 20px;
+        }
+
+        .hero-text p {
+            font-size: 15px;
+            color: var(--text-gray);
+            margin-bottom: 30px;
+        }
+
+        .btn-shop {
+            background-color: var(--primary-green);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 14px;
+            display: inline-block;
+            transition: 0.3s;
+        }
+
+        .btn-shop:hover {
+            background-color: #6d823e;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(131, 155, 77, 0.2);
+        }
+
+        .hero-image {
+            flex: 1;
+            text-align: center;
+            min-width: 300px;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+        }
+
+        /* --- CATEGORY SECTION (3 Kolom) --- */
+        .category-cards {
+            max-width: 1200px;
+            margin: -50px auto 60px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .cat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .cat-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-green);
+        }
+
+        .cat-icon {
+            font-size: 40px;
+            color: var(--primary-green);
+            margin-bottom: 15px;
+        }
+
+        .cat-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #111;
+        }
+
+        .cat-card p {
+            font-size: 13px;
+            color: var(--text-gray);
+        }
+
+        /* --- FEATURES BAR (4 Kolom) --- */
+        .features-bar {
+            background: var(--bg-gray);
+            padding: 60px 20px;
+            margin-bottom: 80px;
+        }
+
+        .feat-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .feat-box {
+            text-align: center;
+        }
+
+        .feat-box i {
+            font-size: 30px;
+            color: var(--primary-green);
+            margin-bottom: 15px;
+        }
+
+        .feat-box h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #111;
+        }
+
+        .feat-box p {
+            font-size: 13px;
+            color: var(--text-gray);
+        }
+
+        /* --- SECTION TITLE UMUM --- */
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            color: #111;
+            margin-bottom: 15px;
+        }
+
+        .title-line {
+            width: 60px;
+            height: 3px;
+            background: var(--primary-green);
+            margin: 0 auto;
+        }
+
+        /* --- PRODUCTS CATALOG --- */
+        .products-section {
+            max-width: 1200px;
+            margin: 0 auto 80px;
+            padding: 0 20px;
+        }
+
+        .katalog {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 30px;
+        }
+
+        .kartu-produk {
+            text-align: center;
+            background: #fff;
+            padding-bottom: 20px;
+            border-radius: 8px;
+            transition: 0.3s;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .kartu-produk:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .wadah-gambar {
+            width: 100%;
+            height: 260px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            background: #f9f9f9;
+        }
+
+        .gambar-produk {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+
+        .kartu-produk:hover .gambar-produk {
+            transform: scale(1.05);
+        }
+
+        .kategori-badge {
+            font-size: 11px;
+            color: var(--primary-green);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .kartu-produk h3 {
+            font-size: 15px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 10px;
+            padding: 0 15px;
+        }
+
+        .harga {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: #111;
+            margin-bottom: 15px;
+        }
+
+        .btn-add-cart {
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-add-cart:hover {
+            background: #6d823e;
+        }
+
+        /* --- CTA BANNER --- */
+        .cta-banner {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=1600&q=80') center/cover fixed;
+            padding: 100px 20px;
+            text-align: center;
+            color: white;
+            margin-bottom: 80px;
+        }
+
+        .cta-banner h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .cta-banner h3 {
+            font-size: 24px;
+            font-weight: 400;
+            margin-bottom: 20px;
+            color: #e5e5e5;
+        }
+
+        .cta-banner p {
+            font-size: 15px;
+            margin-bottom: 30px;
+            color: #ccc;
+        }
+
+        /* --- GAMBAR SEBELUM TESTIMONI --- */
+        .custom-image-section {
+            max-width: 1200px;
+            margin: 0 auto 80px;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .custom-image-section img {
+            width: 100%;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- TESTIMONIALS --- */
+        .testimonials {
+            background: var(--bg-gray);
+            padding: 80px 20px;
+        }
+
+        .testi-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .testi-card {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .quote-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 40px;
+            color: #f0f4e6;
+            z-index: 1;
+        }
+
+        .stars {
+            color: #f59e0b;
+            font-size: 14px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .testi-text {
+            font-size: 14px;
+            color: var(--text-gray);
+            font-style: italic;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .testi-user {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .avatar {
+            width: 45px;
+            height: 45px;
+            background: var(--primary-green);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .user-info h4 {
+            font-size: 15px;
+            color: #111;
+        }
+
+        .user-info span {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--bg-gray);
+            padding: 60px 20px 20px;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-logo {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-logo img {
+            max-width: 250px;
+        }
+
+        .footer-address {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-links {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .footer-address h3,
+        .footer-links h3 {
+            color: #333;
+            font-weight: 500;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .footer-address p,
+        .footer-links ul {
+            line-height: 2;
+            list-style: none;
+        }
+
+        .footer-contact-link {
+            color: #666;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-contact-link:hover {
+            color: var(--primary-green);
+            text-decoration: none;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+            font-size: 13px;
+            color: #888;
+            position: relative;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .scroll-top {
+            position: absolute;
+            right: 0;
+            top: -20px;
+            background: var(--primary-green);
+            color: white;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            font-size: 20px;
+            border-radius: 4px;
+        }
+
+        @media(max-width: 900px) {
+            .category-cards {
+                grid-template-columns: 1fr;
+                margin-top: 40px;
+            }
+
+            .feat-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .testi-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media(max-width: 768px) {
+            .hero-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-text {
+                max-width: 100%;
+            }
+
+            .feat-container {
+                grid-template-columns: 1fr;
+            }
+
+            .main-menu {
+                display: none;
+            }
+
+            .footer-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <a href="/home.html"><img src="/logo-horizontal.png" alt="PT META GAMA PERSADA"></a>
+            </div>
+            <div class="header-right">
+                <nav class="main-menu">
+                    <a href="/home.html" class="active">Home</a>
+                    <a href="/index.html">All Products</a>
+                    <a href="/contact.html">Contact Us</a>
+                    <a href="/admin.html" style="color: #839b4d; font-weight: bold;">Admin</a>
+                </nav>
+                <div class="header-icons">
+                    <div class="icon-badge-wrap" onclick="window.location.href='/login.html'"><i
+                            class="fa-regular fa-user"></i></div>
+                    <div class="icon-badge-wrap" onclick="window.location.href='/checkout.html'">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span class="badge" id="cart-badge">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-text" data-aos="fade-right" data-aos-duration="1000">
+                <span class="hero-subtitle">Best Quality Products</span>
+                <h1>Gerbang Anda Menuju Dunia Digital Tanpa Batas</h1>
+                <p>Dapatkan berbagai produk digital terbaik, mulai dari software, plugin untuk website, hingga game
+                    seru.</p>
+                <a href="/index.html" class="btn-shop">Get Started <i class="fa-solid fa-arrow-right"
+                        style="margin-left: 8px;"></i></a>
+            </div>
+            <div class="hero-image" data-aos="fade-left" data-aos-duration="1000">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt="Digital Products">
+            </div>
+        </div>
+    </section>
+
+    <section class="category-cards">
+        <div class="cat-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="cat-icon"><i class="fa-solid fa-laptop-code"></i></div>
+            <h3>Software</h3>
+            <p>Tingkatkan produktivitas kerja Anda dengan berbagai software hingga aplikasi bisnis mutakhir.</p>
+        </div>
+        <div class="cat-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="cat-icon"><i class="fa-solid fa-plug"></i></div>
+            <h3>Plugin</h3>
+            <p>Sempurnakan website Anda dengan plugin WordPress, Shopify, atau platform e-commerce lainnya.</p>
+        </div>
+        <div class="cat-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="cat-icon"><i class="fa-solid fa-gamepad"></i></div>
+            <h3>Game</h3>
+            <p>Dapatkan game-game PC atau mobile terbaru dan nikmati pengalaman bermain yang tak terlupakan.</p>
+        </div>
+    </section>
+
+    <section class="features-bar">
+        <div class="feat-container">
+            <div class="feat-box" data-aos="zoom-in" data-aos-delay="100">
+                <i class="fa-solid fa-globe"></i>
+                <h4>Worldwide Product</h4>
+                <p>Produk memberikan kenyamanan, keamanan, dan manfaat global.</p>
+            </div>
+            <div class="feat-box" data-aos="zoom-in" data-aos-delay="200">
+                <i class="fa-solid fa-award"></i>
+                <h4>Best Quality</h4>
+                <p>Solusi yang mempermudah pekerjaan dan mempercepat proses.</p>
+            </div>
+            <div class="feat-box" data-aos="zoom-in" data-aos-delay="300">
+                <i class="fa-solid fa-tags"></i>
+                <h4>Best Offers</h4>
+                <p>Menggabungkan kualitas tinggi dengan biaya yang terjangkau.</p>
+            </div>
+            <div class="feat-box" data-aos="zoom-in" data-aos-delay="400">
+                <i class="fa-solid fa-shield-halved"></i>
+                <h4>Secure Payments</h4>
+                <p>Perlindungan berlapis untuk menjaga data dan transaksi.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="products-section">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Our Featured Products</h2>
+            <div class="title-line"></div>
+        </div>
+        <div class="katalog" id="wadah-produk">
+        </div>
+    </section>
+
+    <section class="cta-banner" data-aos="fade-in" data-aos-duration="1500">
+        <h2 data-aos="slide-down">Siap Bertransformasi?</h2>
+        <h3 data-aos="slide-down" data-aos-delay="200">Jangan Lewatkan Kesempatan Ini!</h3>
+        <p data-aos="fade-up" data-aos-delay="400">Unduh segera dan manfaatkan keunggulannya sebelum promosi berakhir!
+        </p>
+        <a href="/index.html" class="btn-shop" data-aos="zoom-in" data-aos-delay="600">Shop Now</a>
+    </section>
+
+    <section class="custom-image-section" data-aos="zoom-in-up" data-aos-duration="1000">
+        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80"
+            alt="Gambar Promosi Spesial">
+    </section>
+
+    <section class="testimonials">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Our Happy Clients!</h2>
+            <div class="title-line"></div>
+        </div>
+        <div class="testi-container">
+            <div class="testi-card" data-aos="flip-left" data-aos-delay="100">
+                <i class="fa-solid fa-quote-right quote-icon"></i>
+                <div class="stars">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                        class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <p class="testi-text">"Saya awalnya ragu beli software kasir online, tapi setelah coba punya CBBSTORE,
+                    ternyata mudah banget. Langsung bisa dipakai dan tim support-nya responsif. Bisnis jadi rapi!"</p>
+                <div class="testi-user">
+                    <div class="avatar">R</div>
+                    <div class="user-info">
+                        <h4>Roni Saputra</h4>
+                        <span>Software POS Kasir</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testi-card" data-aos="flip-left" data-aos-delay="300">
+                <i class="fa-solid fa-quote-right quote-icon"></i>
+                <div class="stars">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                        class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <p class="testi-text">"Sebagai desainer freelance, waktu itu penting. Dengan plugin dari sini, saya bisa
+                    bikin website profesional untuk klien cuma dalam hitungan jam. Koleksinya keren semua."</p>
+                <div class="testi-user">
+                    <div class="avatar">S</div>
+                    <div class="user-info">
+                        <h4>Sari Amalia</h4>
+                        <span>Premium Sites Plugin</span>
+                    </div>
+                </div>
+            </div>
+            <div class="testi-card" data-aos="flip-left" data-aos-delay="500">
+                <i class="fa-solid fa-quote-right quote-icon"></i>
+                <div class="stars">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                        class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <p class="testi-text">"Proses pembelian game di sini super cepat. Setelah bayar, lisensi langsung masuk
+                    ke dashboard dan bisa langsung diunduh. Buat gamer, ini toko recommended banget!"</p>
+                <div class="testi-user">
+                    <div class="avatar">B</div>
+                    <div class="user-info">
+                        <h4>Budi Hartono</h4>
+                        <span>Game Digital License</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <img src="/logo-horizontal.png" alt="PT META GAMA PERSADA" style="max-width: 250px;">
+            </div>
+            <div class="footer-address">
+                <h3>PT META GAMA PERSADA</h3>
+                <p>NEO SOHO AVENUE 2025 Jl Letjen S Parman</p>
+                <p>Tanjung Duren, Grogol, Adm. Jakarta Barat, </p>
+                <p>Provinsi DKI Jakarta, 12560</p>
+                <br>
+                <p><a href="mailto:metagamapersada.pt@gmail.com" class="footer-contact-link"><i
+                            class="fa-solid fa-envelope"></i> metagamapersada.pt@gmail.com</a></p>
+                <p><a href="https://wa.me/6281288098298" target="_blank" class="footer-contact-link"><i
+                            class="fa-brands fa-whatsapp" style="font-size:16px;"></i> +62812 8809 8298</a></p>
+            </div>
+            <div class="footer-links">
+                <h3>Attention</h3>
+                <ul>
+                    <li><a href="/terms.html" class="footer-contact-link">Terms & Condition</a></li>
+                    <li><a href="/privacy.html" class="footer-contact-link">Privacy Policy</a></li>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 META GAMA PERSADA Privacy Policy All rights reserved. Designed & developed by PT META GAMA PERSADA
+            </p>
+            <a href="#" class="scroll-top"><i class="fa-solid fa-angle-up"></i></a>
+        </div>
+    </footer>
+
+    <script>
+        fetch('http://localhost:5000/api/products')
+            .then(response => response.json())
+            .then(data => {
+                const wadah = document.getElementById('wadah-produk');
+                const produkTerpilih = data.slice(0, 4);
+
+                let delayCounter = 100; // Untuk animasi kartu produk bergiliran
+
+                produkTerpilih.forEach(produk => {
+                    const hargaRupiah = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(produk.price);
+
+                    // Menambahkan data-aos ke dalam kartu produk yang di-generate Javascript
+                    wadah.innerHTML += `
+                        <div class="kartu-produk" data-aos="fade-up" data-aos-delay="${delayCounter}">
+                            <div class="wadah-gambar">
+                                <a href="/detail.html?id=${produk.id}">
+                                    <img src="${produk.image_url || 'https://via.placeholder.com/300x300?text=No+Image'}" alt="${produk.name}" class="gambar-produk">
+                                </a>
+                            </div>
+                            <span class="kategori-badge">${produk.category}</span>
+                            <h3>${produk.name}</h3>
+                            <div class="harga">${hargaRupiah}</div>
+                            
+                            <button class="btn-add-cart" onclick="tambahKeKeranjang('${produk.id}', '${produk.name}', ${produk.price}, '${produk.image_url}')"><i class="fa-solid fa-cart-plus"></i> Tambah ke Keranjang</button>
+                        </div>
+                    `;
+                    delayCounter += 150; // Kartu berikutnya muncul lebih lambat sedikit
+                });
+            })
+            .catch(error => console.error('Terjadi kesalahan:', error));
+    </script>
+    <script src="/cart.js"></script>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Menginisiasi animasi saat halaman dimuat
+        AOS.init({
+            duration: 800, // Durasi animasi (800ms)
+            once: true,    // Animasi hanya berjalan 1x saat di-scroll ke bawah
+            offset: 50     // Jarak kemunculan sebelum elemen terlihat di layar
+        });
+    </script>
+</body>
+
+</html>

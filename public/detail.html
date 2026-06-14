@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Produk - META GAMA</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        /* --- RESET & VARIABLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #839b4d;
+            --bg-gray: #f3f4f3;
+            --text-dark: #333;
+            --text-light: #777;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #ffffff;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* --- HEADER (Sama dengan Home) --- */
+        header {
+            padding: 20px;
+            border-bottom: 1px solid #f0f0f0;
+            background: white;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 600;
+            font-size: 18px;
+            letter-spacing: 1px;
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            color: var(--primary-green);
+        }
+
+        /* --- MAIN CONTENT --- */
+        main {
+            max-width: 1100px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .breadcrumb {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+
+        .breadcrumb a {
+            transition: 0.2s;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--primary-green);
+        }
+
+        .product-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        /* Kolom Kiri: Gambar */
+        .image-section {
+            background-color: #f9f9f9;
+            border-radius: 4px;
+            overflow: hidden;
+            position: sticky;
+            top: 100px;
+        }
+
+        .product-image {
+            width: 100%;
+            display: block;
+            transition: transform 0.5s;
+        }
+
+        .product-image:hover {
+            transform: scale(1.05);
+        }
+
+        /* Kolom Kanan: Detail */
+        .info-section {
+            padding-top: 10px;
+        }
+
+        .category-badge {
+            color: var(--primary-green);
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .product-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            color: #111;
+            line-height: 1.2;
+            margin-bottom: 15px;
+        }
+
+        .product-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--primary-green);
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+
+        .description-box {
+            margin-bottom: 40px;
+        }
+
+        .description-box h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #444;
+        }
+
+        .description-text {
+            font-size: 15px;
+            color: #666;
+            white-space: pre-wrap;
+            text-align: justify;
+        }
+
+        /* Tombol Aksi */
+        .action-area {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .btn-buy {
+            background-color: var(--primary-green);
+            color: white;
+            padding: 18px;
+            border: none;
+            border-radius: 0;
+            font-weight: 600;
+            font-size: 15px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-align: center;
+        }
+
+        .btn-buy:hover {
+            background-color: #6d823e;
+            box-shadow: 0 10px 20px rgba(131, 155, 77, 0.2);
+        }
+
+        .secure-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            color: #999;
+            margin-top: 10px;
+        }
+
+        /* --- FOOTER (Sama dengan Home) --- */
+        footer {
+            background-color: var(--bg-gray);
+            padding: 60px 20px 20px;
+            margin-top: 100px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .footer-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-logo img {
+            max-width: 200px;
+        }
+
+        .footer-address h3,
+        .footer-links h3 {
+            color: #333;
+            font-weight: 500;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .footer-address p {
+            line-height: 2;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            line-height: 2.5;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+            font-size: 13px;
+            color: #888;
+        }
+
+        /* Responsive Mobile */
+        @media (max-width: 850px) {
+            .product-wrapper {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .image-section {
+                position: static;
+            }
+
+            .product-title {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo"><a href="/home.html">CBBSTORE</a></div>
+            <nav class="main-menu">
+                <a href="/home.html">Home</a>
+                <a href="/index.html">Shop</a>
+                <a href="/contact.html">Contact Us</a>
+                <a href="/admin.html" style="color: #839b4d; font-weight: bold;">Admin</a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="product-content">
+        <p style="text-align: center; padding: 100px;">Memuat detail produk...</p>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <img src="https://via.placeholder.com/250x80/f3f4f3/839b4d?text=CBBSTORE" alt="Footer Logo">
+            </div>
+            <div class="footer-address">
+                <h3>PT META GAMA PERSADA</h3>
+                <p>NEO SOHO AVENUE 2025 Jl Letjen S Parman</p>
+                <p>Tanjung Duren, Grogol, Adm. Jakarta Barat, </p>
+                <p>Provinsi DKI Jakarta, 12560</p>
+
+                <br>
+                <p>metagamapersada.pt@gmail.com</p>
+                <p>+62812 8809 8298</p>
+            </div>
+            <div class="footer-links">
+                <h3>Attention</h3>
+                <ul>
+                    <li><a href="#">Terms & Condition</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© © 2024 META GAMA PERSADA Privacy Policy All rights reserved. Designed & developed by PT META GAMA
+                PERSADA</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mengambil ID produk dari URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const idProduk = urlParams.get('id');
+
+        // Mengambil data dari Backend
+        fetch(`http://localhost:5000/api/products/${idProduk}`)
+            .then(response => response.json())
+            .then(produk => {
+                if (produk.error) {
+                    document.getElementById('product-content').innerHTML = `
+                        <div style="text-align:center; padding: 100px;">
+                            <h2>Produk tidak ditemukan</h2>
+                            <a href="/home.html" style="color:var(--primary-green)">Kembali ke Beranda</a>
+                        </div>`;
+                    return;
+                }
+
+                const hargaRupiah = new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    maximumFractionDigits: 0
+                }).format(produk.price);
+
+                // INI ADALAH BAGIAN YANG DIUBAH (Perhatikan bagian button class="btn-buy")
+                document.getElementById('product-content').innerHTML = `
+                    <div class="breadcrumb">
+                        <a href="/home.html">Home</a> / <a href="#">${produk.category}</a> / ${produk.name}
+                    </div>
+
+                    <div class="product-wrapper">
+                        <div class="image-section">
+                            <img src="${produk.image_url || 'https://via.placeholder.com/600x600?text=No+Image'}" alt="${produk.name}" class="product-image">
+                        </div>
+
+                        <div class="info-section">
+                            <span class="category-badge">${produk.category}</span>
+                            <h1 class="product-title">${produk.name}</h1>
+                            <div class="product-price">${hargaRupiah}</div>
+                            
+                            <div class="description-box">
+                                <h3>Rincian Produk</h3>
+                                <div class="description-text">${produk.description}</div>
+                            </div>
+
+                            <div class="action-area">
+                                <button class="btn-buy" onclick="tambahKeKeranjang('${produk.id}', '${produk.name}', ${produk.price}, '${produk.image_url}')">TAMBAH KE KERANJANG</button>
+                                <div class="secure-info">
+                                    <span>🔒 Pembayaran Aman & Terenkripsi</span>
+                                    <span>•</span>
+                                    <span>🚀 Pengiriman File Instan</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                // Mengubah judul halaman browser sesuai nama produk
+                document.title = produk.name + " - CBBSTORE";
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('product-content').innerHTML = '<p>Gagal memuat data produk.</p>';
+            });
+    </script>
+    <script src="/cart.js"></script>
+</body>
+
+</html>

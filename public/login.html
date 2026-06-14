@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akun Saya - META GAMA</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- RESET & VARIABLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #839b4d;
+            --text-dark: #333;
+            --text-gray: #777;
+            --border-color: #eee;
+            --bg-gray: #f3f4f3;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #ffffff;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* --- HEADER --- */
+        header {
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 0;
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo img {
+            height: 45px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .main-menu {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-gray);
+        }
+
+        .main-menu a:hover,
+        .main-menu .active {
+            color: var(--primary-green);
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 15px;
+            font-size: 18px;
+            color: var(--text-dark);
+            align-items: center;
+        }
+
+        .icon-badge-wrap {
+            position: relative;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .icon-badge-wrap:hover {
+            color: var(--primary-green);
+        }
+
+        .badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--primary-green);
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+        }
+
+        /* --- AUTH LAYOUT --- */
+        .auth-container {
+            max-width: 1000px;
+            margin: 80px auto;
+            padding: 0 20px;
+            display: flex;
+            gap: 60px;
+            align-items: stretch;
+        }
+
+        .auth-box {
+            flex: 1;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+        }
+
+        .auth-box.register-box {
+            background: var(--bg-gray);
+            border: none;
+        }
+
+        .auth-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #111;
+        }
+
+        .auth-desc {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            outline: none;
+            transition: 0.3s;
+            background: #fafafa;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary-green);
+            background: white;
+        }
+
+        .btn-auth {
+            width: 100%;
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-auth:hover {
+            background: #6d823e;
+            transform: translateY(-2px);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--bg-gray);
+            padding: 60px 20px 20px;
+            margin-top: 100px;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-logo img {
+            max-width: 250px;
+        }
+
+        .footer-address h3,
+        .footer-links h3 {
+            color: #333;
+            font-weight: 500;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .footer-address p {
+            line-height: 2;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            line-height: 2.5;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+            font-size: 13px;
+            color: #888;
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .scroll-top {
+            position: absolute;
+            right: 0;
+            top: -20px;
+            background: var(--primary-green);
+            color: white;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            font-size: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .auth-container {
+                flex-direction: column;
+                gap: 40px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <a href="/home.html">
+                    <img src="/logo-horizontal.png" alt="PT META GAMA PERSADA">
+                </a>
+            </div>
+            <div class="header-right">
+                <nav class="main-menu">
+                    <a href="/home.html">Home</a>
+                    <a href="/index.html">Shop</a>
+                    <a href="/contact.html">Contact Us</a>
+                    <a href="/admin.html" style="color: #839b4d; font-weight: bold;">Admin</a>
+                </nav>
+                <div class="header-icons">
+                    <div class="icon-badge-wrap"><i class="fa-solid fa-magnifying-glass"></i></div>
+                    <div class="icon-badge-wrap">
+                        <i class="fa-regular fa-heart"></i>
+                        <span class="badge">0</span>
+                    </div>
+                    <div class="icon-badge-wrap" onclick="window.location.href='/login.html'"><i
+                            class="fa-regular fa-user" style="color: #839b4d;"></i></div>
+                    <div class="icon-badge-wrap">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span class="badge" id="cart-badge">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="auth-container">
+
+        <div class="auth-box">
+            <h2 class="auth-title">Masuk</h2>
+            <p class="auth-desc">Masuk ke akun Anda untuk melihat pesanan dan mengunduh produk digital Anda.</p>
+
+            <form id="form-login">
+                <div class="form-group">
+                    <label for="login-email">Alamat Email *</label>
+                    <input type="email" id="login-email" placeholder="Masukkan email Anda" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Kata Sandi *</label>
+                    <input type="password" id="login-password" placeholder="Masukkan kata sandi" required>
+                </div>
+                <button type="submit" class="btn-auth">MASUK</button>
+            </form>
+        </div>
+
+        <div class="auth-box register-box">
+            <h2 class="auth-title">Daftar Baru</h2>
+            <p class="auth-desc">Membuat akun sangat mudah dan cepat. Dapatkan akses penuh ke direktori lisensi kami.
+            </p>
+
+            <form id="form-register">
+                <div class="form-group">
+                    <label for="reg-name">Nama Lengkap *</label>
+                    <input type="text" id="reg-name" placeholder="Nama lengkap Anda" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-email">Alamat Email *</label>
+                    <input type="email" id="reg-email" placeholder="Akan digunakan untuk login" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-password">Kata Sandi *</label>
+                    <input type="password" id="reg-password" placeholder="Buat kata sandi yang kuat" required>
+                </div>
+                <button type="submit" class="btn-auth" style="background: #333;">DAFTAR SEKARANG</button>
+            </form>
+        </div>
+
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <img src="/logo-horizontal.png" alt="PT META GAMA PERSADA" style="max-width: 250px;">
+            </div>
+            <div class="footer-address">
+                <h3>PT META GAMA PERSADA</h3>
+                <p>NEO SOHO AVENUE 2025 Jl Letjen S Parman</p>
+                <p>Tanjung Duren, Grogol, Adm. Jakarta Barat, </p>
+                <p>Provinsi DKI Jakarta, 12560</p>
+                <br>
+                <p>metagamapersada.pt@gmail.com</p>
+            </div>
+            <div class="footer-links">
+                <h3>Attention</h3>
+                <ul>
+                    <li><a href="#">Terms & Condition</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 META GAMA PERSADA Privacy Policy All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- LOGIKA DAFTAR (REGISTER) ---
+        document.getElementById('form-register').addEventListener('submit', async function (e) {
+            e.preventDefault(); // Mencegah reload
+
+            const name = document.getElementById('reg-name').value;
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+
+            try {
+                const response = await fetch('http://localhost:5000/api/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, password })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert(result.message); // Notifikasi sukses
+                    this.reset(); // Kosongkan form daftar
+                } else {
+                    alert(result.error); // Notifikasi gagal (misal: email sudah ada)
+                }
+            } catch (error) {
+                alert('Terjadi kesalahan koneksi ke server.');
+            }
+        });
+
+        // --- LOGIKA MASUK (LOGIN) ---
+        document.getElementById('form-login').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            try {
+                const response = await fetch('http://localhost:5000/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert('Berhasil masuk! Selamat datang, ' + result.user.name);
+
+                    // Simpan data user ke memori browser (sebagai "kunci" bahwa dia sedang login)
+                    localStorage.setItem('cbb_user', JSON.stringify(result.user));
+
+                    // Arahkan ke halaman Dashboard (yang akan kita buat selanjutnya)
+                    window.location.href = '/dashboard.html';
+                } else {
+                    alert(result.error); // Password/Email salah
+                }
+            } catch (error) {
+                alert('Terjadi kesalahan koneksi ke server.');
+            }
+        });
+    </script>
+
+    <script src="/cart.js"></script>
+
+</body>
+
+</html>

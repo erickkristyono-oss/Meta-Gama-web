@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - META GAMA</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- RESET & VARIABLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #839b4d;
+            --text-dark: #333;
+            --text-gray: #777;
+            --border-color: #eee;
+            --bg-gray: #f3f4f3;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9f9f9;
+            color: var(--text-dark);
+            display: flex;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            width: 260px;
+            background: white;
+            min-height: 100vh;
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+        }
+
+        .sidebar-header {
+            padding: 25px 20px;
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .sidebar-header img {
+            max-width: 180px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 20px 0;
+            flex: 1;
+        }
+
+        .sidebar-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 25px;
+            color: #555;
+            font-size: 14px;
+            transition: 0.3s;
+            border-left: 4px solid transparent;
+        }
+
+        .sidebar-menu li a:hover,
+        .sidebar-menu li a.active {
+            background: #f0f4e6;
+            color: var(--primary-green);
+            border-left-color: var(--primary-green);
+            font-weight: 500;
+        }
+
+        .sidebar-menu li a i {
+            width: 20px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .sidebar-footer {
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .btn-logout {
+            width: 100%;
+            background: transparent;
+            border: 1px solid #ef4444;
+            color: #ef4444;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+        }
+
+        .btn-logout:hover {
+            background: #ef4444;
+            color: white;
+        }
+
+        /* --- MAIN CONTENT --- */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .page-title h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            color: #111;
+            margin-bottom: 5px;
+        }
+
+        .page-title p {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        .btn-add {
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(131, 155, 77, 0.2);
+        }
+
+        .btn-add:hover {
+            background: #6d823e;
+            transform: translateY(-2px);
+        }
+
+        /* --- DATA TABLE --- */
+        .table-container {
+            background: white;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th,
+        td {
+            padding: 18px 20px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
+        }
+
+        th {
+            background: #fafafa;
+            font-weight: 600;
+            color: #444;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        td img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 4px;
+            background: #eee;
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-action {
+            background: transparent;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-edit {
+            color: #3b82f6;
+        }
+
+        .btn-edit:hover {
+            color: #2563eb;
+        }
+
+        .btn-delete {
+            color: #ef4444;
+        }
+
+        .btn-delete:hover {
+            color: #dc2626;
+        }
+
+        /* --- MODAL (POP-UP FORM) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-box {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-header h2 {
+            font-size: 20px;
+            color: #111;
+        }
+
+        .close-modal {
+            background: transparent;
+            border: none;
+            font-size: 24px;
+            color: #aaa;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .close-modal:hover {
+            color: #ef4444;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--primary-green);
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 4px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            background: #6d823e;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                min-height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <script>
+        const cekUser = JSON.parse(localStorage.getItem('cbb_user'));
+        const emailAdmin = 'metagamapersada.pt@gmail.com';
+
+        // Jika dia belum login, ATAU emailnya bukan email admin, tendang ke halaman home!
+        if (!cekUser || cekUser.email !== emailAdmin) {
+            alert('Akses Ditolak! Halaman ini khusus Administrator.');
+            window.location.replace('/home.html');
+        }
+    </script>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <a href="/home.html">
+                <img src="/logo-horizontal.png" alt="PT META GAMA PERSADA">
+            </a>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="#" onclick="alert('Halaman Dashboard Analitik akan segera hadir!')"><i
+                        class="fa-solid fa-chart-pie"></i> Dashboard Admin</a></li>
+            <li><a href="/admin.html" class="active"><i class="fa-solid fa-box-open"></i> Manajemen Produk</a></li>
+            <li><a href="#" onclick="alert('Halaman Database Pelanggan akan segera hadir!')"><i
+                        class="fa-solid fa-users"></i> Pelanggan</a></li>
+            <li><a href="#" onclick="alert('Halaman Riwayat Transaksi akan segera hadir!')"><i
+                        class="fa-solid fa-money-bill-wave"></i> Transaksi</a></li>
+            <li><a href="/home.html"><i class="fa-solid fa-globe"></i> Kunjungi Website</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <button class="btn-logout" onclick="window.location.href='/home.html'"><i
+                    class="fa-solid fa-arrow-right-from-bracket"></i> Keluar</button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="top-bar">
+            <div class="page-title">
+                <h1>Katalog Produk</h1>
+                <p>Kelola semua aset digital, harga, dan kategori di satu tempat.</p>
+            </div>
+            <button class="btn-add" onclick="bukaModal()"><i class="fa-solid fa-plus"></i> Tambah Produk</button>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Gambar</th>
+                        <th>Nama Produk</th>
+                        <th>Kategori</th>
+                        <th>Harga</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="wadah-tabel-produk">
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 30px;">Memuat data dari database...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <div class="modal-overlay" id="modal-tambah">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2 id="modal-judul">Tambah Produk Baru</h2>
+                <button class="close-modal" onclick="tutupModal()">&times;</button>
+            </div>
+            <form id="form-tambah-produk">
+                <input type="hidden" id="edit-id">
+                <div class="form-group">
+                    <label>Nama Produk</label>
+                    <input type="text" id="input-nama" placeholder="Contoh: Premium POS System" required>
+                </div>
+                <div class="form-group">
+                    <label>Kategori</label>
+                    <input type="text" id="input-kategori" placeholder="Contoh: Software, Plugin Web, dll" required>
+                </div>
+                <div class="form-group">
+                    <label>Harga (Rp)</label>
+                    <input type="number" id="input-harga" placeholder="Contoh: 150000" required>
+                </div>
+                <div class="form-group">
+                    <label>URL Gambar</label>
+                    <input type="url" id="input-gambar" placeholder="https://link-gambar.com/foto.jpg" required>
+                </div>
+                <div class="form-group">
+                    <label>Deskripsi Singkat</label>
+                    <textarea id="input-deskripsi" placeholder="Tuliskan fitur utama produk di sini..."
+                        required></textarea>
+                </div>
+                <button type="submit" class="btn-submit">SIMPAN PRODUK</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const formatRupiah = (angka) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(angka);
+
+        // 1. Fungsi Mengambil & Menampilkan Data ke Tabel
+        function muatTabelProduk() {
+            fetch('http://localhost:5000/api/products')
+                .then(response => response.json())
+                .then(data => {
+                    const wadah = document.getElementById('wadah-tabel-produk');
+                    wadah.innerHTML = ''; // Kosongkan tabel
+
+                    if (data.length === 0) {
+                        wadah.innerHTML = '<tr><td colspan="6" style="text-align:center;">Belum ada produk di database.</td></tr>';
+                        return;
+                    }
+
+                    data.forEach(produk => {
+                        wadah.innerHTML += `
+                            <tr>
+                                <td style="color:#888; font-weight:500;">#${produk.id}</td>
+                                <td><img src="${produk.image_url || 'https://via.placeholder.com/50'}" alt="Thumb"></td>
+                                <td style="font-weight:500; color:#111;">${produk.name}</td>
+                                <td><span style="background:#f3f4f3; padding:4px 10px; border-radius:20px; font-size:12px;">${produk.category}</span></td>
+                                <td style="color:var(--primary-green); font-weight:600;">${formatRupiah(produk.price)}</td>
+                                <td class="action-btns">
+                                    <button class="btn-action btn-edit" title="Edit" onclick="editProduk(${produk.id}, '${produk.name}', '${produk.category}', ${produk.price}, '${produk.image_url}', '${produk.description}')"><i class="fa-regular fa-pen-to-square"></i></button>
+                                    
+                                    <button class="btn-action btn-delete" title="Hapus" onclick="hapusProduk(${produk.id})"><i class="fa-regular fa-trash-can"></i></button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        // 2. Logika Modal Pop-up
+        const modal = document.getElementById('modal-tambah');
+        function bukaModal() { modal.style.display = 'flex'; }
+
+        // FUNGSI TUTUP MODAL (DIPERBARUI AGAR RESET ID & JUDUL)
+        function tutupModal() {
+            modal.style.display = 'none';
+            document.getElementById('form-tambah-produk').reset();
+            document.getElementById('edit-id').value = '';
+            document.getElementById('modal-judul').innerText = 'Tambah Produk Baru';
+        }
+
+        // 3. FUNGSI MEMBUKA MODAL UNTUK EDIT
+        function editProduk(id, name, category, price, image_url, description) {
+            document.getElementById('modal-judul').innerText = 'Edit Produk';
+            document.getElementById('edit-id').value = id;
+            document.getElementById('input-nama').value = name;
+            document.getElementById('input-kategori').value = category;
+            document.getElementById('input-harga').value = price;
+            document.getElementById('input-gambar').value = image_url;
+            document.getElementById('input-deskripsi').value = description;
+            bukaModal();
+        }
+
+        // 4. LOGIKA SUBMIT FORM (GABUNGAN TAMBAH & EDIT)
+        document.getElementById('form-tambah-produk').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const idEdit = document.getElementById('edit-id').value;
+            const dataProduk = {
+                name: document.getElementById('input-nama').value,
+                description: document.getElementById('input-deskripsi').value,
+                price: document.getElementById('input-harga').value,
+                category: document.getElementById('input-kategori').value,
+                image_url: document.getElementById('input-gambar').value
+            };
+
+            if (idEdit) {
+                // Mode EDIT (PUT)
+                fetch(`http://localhost:5000/api/products/${idEdit}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(dataProduk)
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            alert('Produk berhasil diedit!');
+                            tutupModal();
+                            muatTabelProduk(); // Refresh tabel
+                        } else {
+                            alert('Gagal mengedit produk. Cek API backend Anda.');
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            } else {
+                // Mode TAMBAH (POST)
+                fetch('http://localhost:5000/api/products', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(dataProduk)
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            alert('Produk berhasil ditambahkan!');
+                            tutupModal();
+                            muatTabelProduk(); // Refresh tabel
+                        } else {
+                            alert('Gagal menambahkan produk. Cek API backend Anda.');
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+        });
+
+        // 5. Hapus Produk (Hard Delete)
+        function hapusProduk(id) {
+            if (confirm('Yakin ingin menghapus produk ini secara permanen?')) {
+                fetch(`http://localhost:5000/api/products/${id}`, { method: 'DELETE' })
+                    .then(response => {
+                        if (response.ok) {
+                            alert('Produk telah dihapus!');
+                            muatTabelProduk(); // Refresh tabel otomatis
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+        }
+
+        // Panggil fungsi muat tabel saat halaman dibuka
+        muatTabelProduk();
+    </script>
+</body>
+
+</html>

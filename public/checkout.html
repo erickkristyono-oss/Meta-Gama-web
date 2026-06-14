@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - META GAMA</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- RESET & VARIABLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #839b4d;
+            --text-dark: #333;
+            --text-gray: #777;
+            --border-color: #eee;
+            --bg-gray: #f3f4f3;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #ffffff;
+            color: var(--text-dark);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* --- HEADER (Sama dengan semua halaman) --- */
+        header {
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 0;
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo img {
+            height: 45px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .main-menu {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-gray);
+        }
+
+        .main-menu a:hover {
+            color: var(--primary-green);
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 15px;
+            font-size: 18px;
+            color: var(--text-dark);
+            align-items: center;
+        }
+
+        .icon-badge-wrap {
+            position: relative;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .icon-badge-wrap:hover {
+            color: var(--primary-green);
+        }
+
+        .badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--primary-green);
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+        }
+
+        /* --- CHECKOUT LAYOUT --- */
+        .checkout-container {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        /* Kolom Kiri: Daftar Keranjang */
+        .cart-section {
+            flex: 2;
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: #111;
+        }
+
+        .cart-items {
+            border-top: 1px solid var(--border-color);
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .cart-item-img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 4px;
+            background: #f9f9f9;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: #222;
+        }
+
+        .cart-item-price {
+            font-size: 15px;
+            color: var(--primary-green);
+            font-weight: 600;
+        }
+
+        .btn-remove {
+            background: transparent;
+            border: none;
+            color: #ef4444;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 10px;
+            transition: 0.2s;
+        }
+
+        .btn-remove:hover {
+            color: #dc2626;
+            text-decoration: underline;
+        }
+
+        .empty-cart-msg {
+            text-align: center;
+            padding: 50px 0;
+            color: var(--text-gray);
+        }
+
+        .btn-back-shop {
+            display: inline-block;
+            margin-top: 20px;
+            background: var(--primary-green);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+        }
+
+        /* Kolom Kanan: Ringkasan & Form */
+        .summary-section {
+            flex: 1;
+            background: var(--bg-gray);
+            padding: 30px;
+            border-radius: 8px;
+            position: sticky;
+            top: 100px;
+        }
+
+        .summary-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #222;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 15px;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            font-weight: 600;
+            font-size: 20px;
+            color: #111;
+        }
+
+        .checkout-form {
+            margin-top: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: 'Poppins', sans-serif;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary-green);
+        }
+
+        .btn-checkout {
+            width: 100%;
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.3s;
+            border-radius: 4px;
+        }
+
+        .btn-checkout:hover {
+            background: #6d823e;
+        }
+
+        .btn-checkout:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--bg-gray);
+            padding: 60px 20px 20px;
+            margin-top: 100px;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-logo img {
+            max-width: 250px;
+        }
+
+        .footer-address h3,
+        .footer-links h3 {
+            color: #333;
+            font-weight: 500;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .footer-address p {
+            line-height: 2;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            line-height: 2.5;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+            font-size: 13px;
+            color: #888;
+        }
+
+        @media (max-width: 850px) {
+            .checkout-container {
+                flex-direction: column;
+            }
+
+            .cart-section,
+            .summary-section {
+                width: 100%;
+            }
+
+            .summary-section {
+                position: static;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <a href="/home.html">
+                    <img src="/logo-horizontal.png" alt="PT META GAMA PERSADA">
+                </a>
+            </div>
+            <div class="header-right">
+                <nav class="main-menu">
+                    <a href="/home.html">Home</a>
+                    <a href="/index.html">Shop</a>
+                    <a href="/contact.html">Contact Us</a>
+                    <a href="/admin.html" style="color: #839b4d; font-weight: bold;">Admin</a>
+                </nav>
+                <div class="header-icons">
+                    <div class="icon-badge-wrap"><i class="fa-solid fa-magnifying-glass"></i></div>
+                    <div class="icon-badge-wrap">
+                        <i class="fa-regular fa-heart"></i>
+                        <span class="badge">0</span>
+                    </div>
+                    <div class="icon-badge-wrap"><i class="fa-regular fa-user"></i></div>
+                    <div class="icon-badge-wrap">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span class="badge">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="checkout-container">
+
+        <div class="cart-section">
+            <h1 class="page-title">Keranjang Belanja</h1>
+            <div class="cart-items" id="wadah-checkout">
+            </div>
+        </div>
+
+        <div class="summary-section">
+            <h2 class="summary-title">Ringkasan Pesanan</h2>
+
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <span id="subtotal-harga">Rp 0</span>
+            </div>
+            <div class="summary-row">
+                <span>Biaya Admin</span>
+                <span>Gratis</span>
+            </div>
+            <div class="summary-total">
+                <span>Total</span>
+                <span id="total-harga">Rp 0</span>
+            </div>
+
+            <form class="checkout-form" id="form-pembayaran">
+                <div class="form-group">
+                    <label for="nama_pembeli">Nama Lengkap</label>
+                    <input type="text" id="nama_pembeli" placeholder="Masukkan nama Anda" required>
+                </div>
+                <div class="form-group">
+                    <label for="email_pembeli">Alamat Email (Untuk Pengiriman Produk)</label>
+                    <input type="email" id="email_pembeli" placeholder="email@contoh.com" required>
+                </div>
+                <button type="submit" class="btn-checkout" id="btn-bayar">PROSES PEMBAYARAN</button>
+            </form>
+        </div>
+
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <img src="/logo-horizontal.png" alt="PT META GAMA PERSADA" style="max-width: 250px;">
+            </div>
+            <div class="footer-address">
+                <h3>PT META GAMA PERSADA</h3>
+                <p>NEO SOHO AVENUE 2025 Jl Letjen S Parman</p>
+                <p>Tanjung Duren, Grogol, Adm. Jakarta Barat, </p>
+                <p>Provinsi DKI Jakarta, 12560</p>
+                <br>
+                <p>metagamapersada.pt@gmail.com</p>
+            </div>
+            <div class="footer-links">
+                <h3>Attention</h3>
+                <ul>
+                    <li><a href="#">Terms & Condition</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 META GAMA PERSADA Privacy Policy All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mengambil data dari localStorage yang disimpan oleh cart.js
+        let dataKeranjang = JSON.parse(localStorage.getItem('cbb_cart')) || [];
+
+        const wadahCheckout = document.getElementById('wadah-checkout');
+        const teksSubtotal = document.getElementById('subtotal-harga');
+        const teksTotal = document.getElementById('total-harga');
+        const btnBayar = document.getElementById('btn-bayar');
+
+        // Fungsi format Rupiah
+        const formatRupiah = (angka) => {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(angka);
+        };
+
+        // Fungsi untuk menampilkan daftar belanja
+        function tampilkanKeranjang() {
+            wadahCheckout.innerHTML = ''; // Kosongkan dulu
+            let totalHitung = 0;
+
+            if (dataKeranjang.length === 0) {
+                wadahCheckout.innerHTML = `
+                    <div class="empty-cart-msg">
+                        <i class="fa-solid fa-cart-arrow-down" style="font-size: 40px; margin-bottom: 15px; color: #ccc;"></i>
+                        <p>Keranjang belanja Anda saat ini masih kosong.</p>
+                        <a href="/index.html" class="btn-back-shop">Kembali Berbelanja</a>
+                    </div>
+                `;
+                teksSubtotal.innerText = 'Rp 0';
+                teksTotal.innerText = 'Rp 0';
+                btnBayar.disabled = true; // Matikan tombol jika keranjang kosong
+                return;
+            }
+
+            btnBayar.disabled = false; // Aktifkan tombol
+
+            dataKeranjang.forEach(item => {
+                totalHitung += parseInt(item.harga);
+                wadahCheckout.innerHTML += `
+                    <div class="cart-item">
+                        <img src="${item.gambar}" alt="${item.nama}" class="cart-item-img">
+                        <div class="cart-item-info">
+                            <h3 class="cart-item-title">${item.nama}</h3>
+                            <div class="cart-item-price">${formatRupiah(item.harga)}</div>
+                            <button class="btn-remove" onclick="hapusDariKeranjang('${item.id}')">
+                                <i class="fa-regular fa-trash-can"></i> Hapus
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            teksSubtotal.innerText = formatRupiah(totalHitung);
+            teksTotal.innerText = formatRupiah(totalHitung);
+        }
+
+        // Fungsi untuk menghapus item
+        function hapusDariKeranjang(id) {
+            // Saring array, sisakan yang id-nya BUKAN id yang dihapus
+            dataKeranjang = dataKeranjang.filter(item => item.id !== id);
+            // Simpan pembaruan ke localStorage
+            localStorage.setItem('cbb_cart', JSON.stringify(dataKeranjang));
+            // Tampilkan ulang
+            tampilkanKeranjang();
+            // Panggil update badge dari cart.js jika ada
+            if (typeof updateBadgeKeranjang === 'function') updateBadgeKeranjang();
+        }
+
+        // Jalankan saat pertama kali dibuka
+        tampilkanKeranjang();
+
+        // Proses Pembayaran Asli ke Database Backend
+        document.getElementById('form-pembayaran').addEventListener('submit', async function (e) {
+            e.preventDefault(); // Mencegah halaman refresh
+
+            // Mengambil data user yang sedang login dari localStorage
+            const userLogon = JSON.parse(localStorage.getItem('cbb_user'));
+
+            // Proteksi: Jika pembeli belum login, paksa dia login dulu sebelum bayar
+            if (!userLogon) {
+                alert('Silakan login terlebih dahulu untuk melanjutkan pembayaran agar produk masuk ke akun Anda!');
+                window.location.href = '/login.html';
+                return;
+            }
+
+            const btnBayar = document.getElementById('btn-bayar');
+            btnBayar.innerText = 'Memproses...';
+            btnBayar.disabled = true;
+
+            const dataTransaksi = {
+                user_id: userLogon.id,
+                user_name: document.getElementById('nama_pembeli').value,
+                user_email: document.getElementById('email_pembeli').value,
+                cart_items: dataKeranjang
+            };
+
+            try {
+                const response = await fetch('http://localhost:5000/api/checkout', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(dataTransaksi)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert(`Pembayaran Sukses!\nProduk digital Anda telah aktif dan siap diunduh di halaman Dashboard.`);
+
+                    // Kosongkan keranjang belanja karena sudah dibeli
+                    localStorage.removeItem('cbb_cart');
+                    dataKeranjang = [];
+
+                    // Arahkan langsung ke halaman Dashboard Pelanggan
+                    window.location.href = '/dashboard.html';
+                } else {
+                    alert(result.error);
+                    btnBayar.innerText = 'PROSES PEMBAYARAN';
+                    btnBayar.disabled = false;
+                }
+            } catch (error) {
+                alert('Terjadi kesalahan koneksi ke server.');
+                btnBayar.innerText = 'PROSES PEMBAYARAN';
+                btnBayar.disabled = false;
+            }
+        });
+    </script>
+
+    <script src="/cart.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - META GAMA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- RESET & VARIABLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #839b4d;
+            --text-dark: #333;
+            --text-gray: #777;
+            --border-color: #eee;
+            --bg-gray: #f3f4f3;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #ffffff;
+            color: var(--text-dark);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* --- HEADER --- */
+        header {
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 0;
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo img {
+            height: 45px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .main-menu {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-gray);
+        }
+
+        .main-menu a:hover,
+        .main-menu .active {
+            color: var(--primary-green);
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 15px;
+            font-size: 18px;
+            color: var(--text-dark);
+            align-items: center;
+        }
+
+        .icon-badge-wrap {
+            position: relative;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .icon-badge-wrap:hover {
+            color: var(--primary-green);
+        }
+
+        .badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--primary-green);
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+        }
+
+        /* --- SHOP LAYOUT --- */
+        .shop-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        .sidebar {
+            width: 25%;
+            position: sticky;
+            top: 100px;
+        }
+
+        .widget {
+            margin-bottom: 40px;
+        }
+
+        /* Search Box */
+        .search-box {
+            display: flex;
+            background: #f3f4f3;
+            border-radius: 30px;
+            padding: 10px 20px;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .search-box input {
+            border: none;
+            background: transparent;
+            outline: none;
+            width: 100%;
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+            color: var(--text-dark);
+        }
+
+        .search-box i {
+            color: var(--text-gray);
+            cursor: pointer;
+        }
+
+        /* Widget Title & Categories */
+        .widget-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+
+        .cat-list {
+            list-style: none;
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+
+        .cat-list li {
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .cat-list li:hover {
+            color: var(--primary-green);
+        }
+
+        /* Filter Price */
+        .price-slider {
+            width: 100%;
+            margin-bottom: 15px;
+            accent-color: var(--primary-green);
+        }
+
+        .price-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 13px;
+            color: var(--text-gray);
+        }
+
+        .btn-filter {
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-filter:hover {
+            background: #6d823e;
+        }
+
+        /* Product Tags */
+        .tags-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag-item {
+            border: 1px solid var(--border-color);
+            padding: 5px 12px;
+            font-size: 12px;
+            color: var(--text-gray);
+            cursor: pointer;
+            transition: 0.2s;
+            border-radius: 2px;
+        }
+
+        .tag-item:hover {
+            border-color: var(--primary-green);
+            color: var(--primary-green);
+            background-color: #f0f4e6;
+        }
+
+        /* --- MAIN CONTENT (Kanan) --- */
+        .main-content {
+            width: 75%;
+        }
+
+        .shop-topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+
+        .sort-dropdown {
+            padding: 8px 15px;
+            border: 1px solid var(--border-color);
+            outline: none;
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-gray);
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .product-card {
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid #eee;
+            padding-bottom: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .product-card:hover {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            transform: translateY(-5px);
+        }
+
+        .product-card .image-wrapper {
+            width: 100%;
+            aspect-ratio: 1/1;
+            background: #f9f9f9;
+            overflow: hidden;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .product-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .product-card h3 {
+            font-size: 13px;
+            font-weight: 400;
+            color: #888;
+            margin-bottom: 8px;
+            line-height: 1.4;
+            transition: 0.2s;
+            padding: 0 10px;
+        }
+
+        .product-card:hover h3 {
+            color: var(--primary-green);
+        }
+
+        .product-card .price {
+            font-size: 14px;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--bg-gray);
+            padding: 60px 20px 20px;
+            margin-top: 100px;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-logo img {
+            max-width: 250px;
+        }
+
+        .footer-address h3,
+        .footer-links h3 {
+            color: #333;
+            font-weight: 500;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .footer-address p {
+            line-height: 2;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            line-height: 2.5;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+            font-size: 13px;
+            color: #888;
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .scroll-top {
+            position: absolute;
+            right: 0;
+            top: -20px;
+            background: var(--primary-green);
+            color: white;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            font-size: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .shop-container {
+                flex-direction: column;
+            }
+
+            .sidebar,
+            .main-content {
+                width: 100%;
+            }
+
+            .sidebar {
+                position: static;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .main-menu {
+                display: none;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <a href="/home.html">
+                    <img src="/logo-horizontal.png" alt="PT META GAMA PERSADA">
+                </a>
+            </div>
+            <div class="header-right">
+                <nav class="main-menu">
+                    <a href="/home.html">Home</a>
+                    <a href="/index.html" class="active">Shop</a>
+                </nav>
+                <div class="header-icons">
+                    <div class="icon-badge-wrap"><i class="fa-solid fa-magnifying-glass"></i></div>
+                    <div class="icon-badge-wrap"><i class="fa-regular fa-heart"></i><span class="badge">0</span></div>
+                    <div class="icon-badge-wrap" onclick="window.location.href='/login.html'"><i
+                            class="fa-regular fa-user"></i></div>
+                    <div class="icon-badge-wrap" onclick="window.location.href='/checkout.html'"><i
+                            class="fa-solid fa-cart-shopping"></i><span class="badge" id="cart-badge">0</span></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="shop-container">
+
+        <aside class="sidebar">
+            <div class="search-box">
+                <input type="text" id="kolom-cari" placeholder="Search products...">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+
+            <div class="widget">
+                <h3 class="widget-title">Categories</h3>
+                <ul class="cat-list" id="daftar-kategori-dinamis">
+                </ul>
+            </div>
+
+            <div class="widget">
+                <h3 class="widget-title">Filter By</h3>
+                <input type="range" min="0" max="15000000" value="15000000" class="price-slider" id="price-range"
+                    oninput="updatePriceLabel(this.value)">
+                <div class="price-controls">
+                    <button class="btn-filter" onclick="filterHarga()">Saring</button>
+                    <span>Maks: <span id="price-label">Rp15.000.000</span></span>
+                </div>
+            </div>
+
+            <div class="widget">
+                <h3 class="widget-title">Product Tags</h3>
+                <div class="tags-grid" id="daftar-tag-dinamis">
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="shop-topbar">
+                <div id="result-count">Showing results...</div>
+                <select class="sort-dropdown" id="sort-select" onchange="urutkanProduk(this.value)">
+                    <option value="default">Pengurutan standar</option>
+                    <option value="price-low">Urutkan harga: rendah ke tinggi</option>
+                    <option value="price-high">Urutkan harga: tinggi ke rendah</option>
+                </select>
+            </div>
+
+            <div class="product-grid" id="wadah-produk">
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <img src="/logo-horizontal.png" alt="PT META GAMA PERSADA" style="max-width: 250px;">
+            </div>
+            <div class="footer-address">
+                <h3>PT META GAMA PERSADA</h3>
+                <p>NEO SOHO AVENUE 2025 Jl Letjen S Parman</p>
+                <p>Tanjung Duren, Grogol, Adm. Jakarta Barat, </p>
+                <p>Provinsi DKI Jakarta, 12560</p>
+                <br>
+                <p>metagamapersada.pt@gmail.com</p>
+                <p>+62812 8809 8298</p>
+            </div>
+            <div class="footer-links">
+                <h3>Attention</h3>
+                <ul>
+                    <li><a href="/terms.html" class="footer-contact-link">Terms & Condition</a></li>
+                    <li><a href="/privacy.html" class="footer-contact-link">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 META GAMA PERSADA Privacy Policy All rights reserved.</p>
+            <a href="#" class="scroll-top">⌃</a>
+        </div>
+    </footer>
+
+    <script src="/cart.js"></script>
+    <script>
+        let dataProdukUtuh = [];
+
+        // 1. AMBIL DATA DARI DATABASE
+        fetch('http://localhost:5000/api/products')
+            .then(response => response.json())
+            .then(data => {
+                dataProdukUtuh = data;
+                tampilkanProduk(dataProdukUtuh);
+                buatSidebarDinamis(dataProdukUtuh); // Panggil fungsi otomatis
+            })
+            .catch(error => console.error('Terjadi kesalahan:', error));
+
+        // 2. FUNGSI UNTUK MENCETAK PRODUK
+        function tampilkanProduk(dataYangDitampilkan) {
+            const wadah = document.getElementById('wadah-produk');
+            wadah.innerHTML = '';
+
+            const resultCount = document.getElementById('result-count');
+            if (resultCount) resultCount.innerText = `Menampilkan ${dataYangDitampilkan.length} produk`;
+
+            if (dataYangDitampilkan.length === 0) {
+                wadah.innerHTML = '<p style="grid-column: span 3; text-align: center; color: #888;">Produk tidak ditemukan.</p>';
+                return;
+            }
+
+            dataYangDitampilkan.forEach(produk => {
+                const hargaRupiah = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(produk.price);
+                wadah.innerHTML += `
+                    <div class="product-card">
+                        <div class="image-wrapper" onclick="window.location.href='/detail.html?id=${produk.id}'">
+                            <img src="${produk.image_url || 'https://via.placeholder.com/400x400?text=No+Image'}" alt="${produk.name}">
+                        </div>
+                        <h3 onclick="window.location.href='/detail.html?id=${produk.id}'">${produk.category} - ${produk.name}</h3>
+                        <div class="price">${hargaRupiah}</div>
+                        <button style="margin-top: 12px; background: transparent; border: none; color: #839b4d; cursor: pointer; font-weight: 600;" onclick="tambahKeKeranjang('${produk.id}', '${produk.name}', ${produk.price}, '${produk.image_url}')">🛒 Add to cart</button>
+                    </div>
+                `;
+            });
+        }
+
+        // 3. FUNGSI MEMBUAT SIDEBAR OTOMATIS BERDASARKAN DBeaver
+        function buatSidebarDinamis(data) {
+            const wadahKategori = document.getElementById('daftar-kategori-dinamis');
+            const wadahTag = document.getElementById('daftar-tag-dinamis');
+
+            // Hitung jumlah produk per kategori yang ada di DBeaver
+            const hitungKategori = {};
+            data.forEach(p => {
+                if (p.category) {
+                    hitungKategori[p.category] = (hitungKategori[p.category] || 0) + 1;
+                }
+            });
+
+            // Reset HTML
+            wadahKategori.innerHTML = `<li style="color: #839b4d; font-weight: bold;" onclick="klikKategori('All')"><span>Tampilkan Semua</span></li>`;
+            wadahTag.innerHTML = '';
+
+            // Looping data kategori untuk dibuatkan tombolnya
+            for (const namaKategori in hitungKategori) {
+                const jumlah = hitungKategori[namaKategori];
+
+                // Masukkan ke daftar kategori
+                wadahKategori.innerHTML += `<li onclick="klikKategori('${namaKategori}')"><span>${namaKategori}</span> <span>(${jumlah})</span></li>`;
+
+                // Masukkan ke daftar tag
+                wadahTag.innerHTML += `<div class="tag-item" onclick="klikKategori('${namaKategori}')">${namaKategori}</div>`;
+            }
+        }
+
+        // 4. FUNGSI PENCARIAN
+        document.getElementById('kolom-cari').addEventListener('input', function (e) {
+            const teksCari = e.target.value.toLowerCase();
+            const hasilFilter = dataProdukUtuh.filter(produk =>
+                produk.name.toLowerCase().includes(teksCari) ||
+                produk.category.toLowerCase().includes(teksCari)
+            );
+            tampilkanProduk(hasilFilter);
+        });
+
+        // 5. FUNGSI KLIK KATEGORI
+        function klikKategori(namaKategori) {
+            if (namaKategori === 'All') {
+                tampilkanProduk(dataProdukUtuh);
+            } else {
+                const hasilFilter = dataProdukUtuh.filter(produk => produk.category === namaKategori);
+                tampilkanProduk(hasilFilter);
+            }
+        }
+
+        // 6. FUNGSI FILTER HARGA
+        function updatePriceLabel(val) {
+            const labelRupiah = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(val);
+            document.getElementById('price-label').innerText = labelRupiah;
+        }
+
+        function filterHarga() {
+            const maxHarga = document.getElementById('price-range').value;
+            const hasilFilter = dataProdukUtuh.filter(produk => Number(produk.price) <= Number(maxHarga));
+            tampilkanProduk(hasilFilter);
+        }
+
+        // 7. FUNGSI URUTAN HARGA
+        function urutkanProduk(tipe) {
+            let dataSort = [...dataProdukUtuh];
+            if (tipe === 'price-low') {
+                dataSort.sort((a, b) => Number(a.price) - Number(b.price));
+            } else if (tipe === 'price-high') {
+                dataSort.sort((a, b) => Number(b.price) - Number(a.price));
+            }
+            tampilkanProduk(dataSort);
+        }
+    </script>
+</body>
+
+</html>
