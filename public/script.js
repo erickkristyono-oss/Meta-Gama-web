@@ -55,7 +55,7 @@ fetch(`http://localhost:5000/api/products/${idProduk}`)
                 `;
 
         // Mengubah judul halaman browser sesuai nama produk
-        document.title = produk.name + " - CBBSTORE";
+        document.title = produk.name + " - METAGAMA";
     })
     .catch(error => {
         console.error('Error:', error);
