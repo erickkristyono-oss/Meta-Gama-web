@@ -3,7 +3,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const idProduk = urlParams.get('id');
 
 // Mengambil data dari Backend
-fetch(`http://localhost:5000/api/products/${idProduk}`)
+fetch(`fetch('/api/products')/${idProduk}`)
     .then(response => response.json())
     .then(produk => {
         if (produk.error) {
