@@ -30,7 +30,7 @@ function tambahKeKeranjang(id, nama, harga, gambar) {
     keranjang.push({ id, nama, harga, gambar });
 
     // Simpan keranjang baru ke memori browser
-    localStorage.setItem('cbb_cart', JSON.stringify(keranjang));
+    localStorage.setItem('metagama_cart', JSON.stringify(keranjang));
 
     // Perbarui angka di ikon keranjang
     updateBadgeKeranjang();
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Mengambil elemen bungkusnya (.icon-badge-wrap)
         ikon.parentElement.onclick = () => {
             // LOGIKA OPSI 2: CEK LOGIN DULU SEBELUM BUKA KERANJANG
-            const cekLogin = JSON.parse(localStorage.getItem('cbb_user'));
+            const cekLogin = JSON.parse(localStorage.getItem('metagama_user'));
 
             if (!cekLogin) {
                 // Jika belum login
