@@ -18,13 +18,15 @@ const db = mysql.createPool({
     connectionLimit: 10,
 });
 
-// Cek koneksi saat startup
+// Ganti bagian db.getConnection ini
 db.getConnection((err, connection) => {
     if (err) {
-        console.error('❌ Gagal terhubung ke database:', err.message);
+        // Ini akan muncul di log Hostinger
+        console.error('❌ DB Error:', err.code);
+        console.error('❌ Detail:', err.message);
         return;
     }
-    console.log('✅ Berhasil terhubung ke database MySQL!');
+    console.log('✅ Database terhubung!');
     connection.release();
 });
 
