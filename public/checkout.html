@@ -10,7 +10,6 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* --- RESET & VARIABLES --- */
         * {
             margin: 0;
             padding: 0;
@@ -36,7 +35,6 @@
             color: inherit;
         }
 
-        /* --- HEADER (Sama dengan semua halaman) --- */
         header {
             border-bottom: 1px solid var(--border-color);
             padding: 15px 0;
@@ -111,7 +109,6 @@
             border-radius: 50%;
         }
 
-        /* --- CHECKOUT LAYOUT --- */
         .checkout-container {
             max-width: 1200px;
             margin: 60px auto;
@@ -121,7 +118,6 @@
             align-items: flex-start;
         }
 
-        /* Kolom Kiri: Daftar Keranjang */
         .cart-section {
             flex: 2;
         }
@@ -203,7 +199,6 @@
             border-radius: 30px;
         }
 
-        /* Kolom Kanan: Ringkasan & Form */
         .summary-section {
             flex: 1;
             background: var(--bg-gray);
@@ -292,7 +287,6 @@
             cursor: not-allowed;
         }
 
-        /* --- FOOTER --- */
         footer {
             background-color: var(--bg-gray);
             padding: 60px 20px 20px;
@@ -359,7 +353,6 @@
 </head>
 
 <body>
-
     <header>
         <div class="nav-container">
             <div class="logo">
@@ -384,31 +377,17 @@
         </div>
     </header>
 
-
     <div class="checkout-container">
-
         <div class="cart-section">
             <h1 class="page-title">Keranjang Belanja</h1>
-            <div class="cart-items" id="wadah-checkout">
-            </div>
+            <div class="cart-items" id="wadah-checkout"></div>
         </div>
 
         <div class="summary-section">
             <h2 class="summary-title">Ringkasan Pesanan</h2>
-
-            <div class="summary-row">
-                <span>Subtotal</span>
-                <span id="subtotal-harga">Rp 0</span>
-            </div>
-            <div class="summary-row">
-                <span>Biaya Admin</span>
-                <span>Gratis</span>
-            </div>
-            <div class="summary-total">
-                <span>Total</span>
-                <span id="total-harga">Rp 0</span>
-            </div>
-
+            <div class="summary-row"><span>Subtotal</span><span id="subtotal-harga">Rp 0</span></div>
+            <div class="summary-row"><span>Biaya Admin</span><span>Gratis</span></div>
+            <div class="summary-total"><span>Total</span><span id="total-harga">Rp 0</span></div>
             <form class="checkout-form" id="form-pembayaran">
                 <div class="form-group">
                     <label for="nama_pembeli">Nama Lengkap</label>
@@ -421,7 +400,6 @@
                 <button type="submit" class="btn-checkout" id="btn-bayar">PROSES PEMBAYARAN</button>
             </form>
         </div>
-
     </div>
 
     <footer>
@@ -435,42 +413,39 @@
                 <p>Tanjung Duren, Grogol, Adm. Jakarta Barat, </p>
                 <p>Provinsi DKI Jakarta, 12560</p>
                 <br>
-                <p><a href="mailto:metagamapersada.pt@gmail.com" class="footer-contact-link"><i
-                            class="fa-solid fa-envelope"></i> metagamapersada.pt@gmail.com</a></p>
-                <p><a href="https://wa.me/6281288098298" target="_blank" class="footer-contact-link"><i
-                            class="fa-brands fa-whatsapp" style="font-size:16px;"></i> +62812 8809 8298</a></p>
+                <p><a href="mailto:metagamapersada.pt@gmail.com"><i class="fa-solid fa-envelope"></i>
+                        metagamapersada.pt@gmail.com</a></p>
+                <p><a href="https://wa.me/6281288098298" target="_blank"><i class="fa-brands fa-whatsapp"
+                            style="font-size:16px;"></i> +62812 8809 8298</a></p>
             </div>
             <div class="footer-links">
                 <h3>Attention</h3>
                 <ul>
-                    <li><a href="/terms.html" class="footer-contact-link">Terms & Condition</a></li>
-                    <li><a href="/privacy.html" class="footer-contact-link">Privacy Policy</a></li>
+                    <li><a href="/terms.html">Terms & Condition</a></li>
+                    <li><a href="/privacy.html">Privacy Policy</a></li>
+                </ul>
             </div>
         </div>
         <div class="footer-bottom">
             <p>© 2024 META GAMA PERSADA Privacy Policy All rights reserved. Designed & developed by PT META GAMA PERSADA
             </p>
-            <a href="#" class="scroll-top"><i class="fa-solid fa-angle-up"></i></a>
         </div>
     </footer>
 
     <script>
-        // Mengambil data dari localStorage yang disimpan oleh cart.js
-        let dataKeranjang = JSON.parse(localStorage.getItem('cbb_cart')) || [];
+        // KEY KONSISTEN: metagama_cart & metagama_user
+        let dataKeranjang = JSON.parse(localStorage.getItem('metagama_cart')) || [];
 
         const wadahCheckout = document.getElementById('wadah-checkout');
         const teksSubtotal = document.getElementById('subtotal-harga');
         const teksTotal = document.getElementById('total-harga');
         const btnBayar = document.getElementById('btn-bayar');
 
-        // Fungsi format Rupiah
-        const formatRupiah = (angka) => {
-            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(angka);
-        };
+        const formatRupiah = (angka) =>
+            new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(angka);
 
-        // Fungsi untuk menampilkan daftar belanja
         function tampilkanKeranjang() {
-            wadahCheckout.innerHTML = ''; // Kosongkan dulu
+            wadahCheckout.innerHTML = '';
             let totalHitung = 0;
 
             if (dataKeranjang.length === 0) {
@@ -479,16 +454,14 @@
                         <i class="fa-solid fa-cart-arrow-down" style="font-size: 40px; margin-bottom: 15px; color: #ccc;"></i>
                         <p>Keranjang belanja Anda saat ini masih kosong.</p>
                         <a href="/index.html" class="btn-back-shop">Kembali Berbelanja</a>
-                    </div>
-                `;
+                    </div>`;
                 teksSubtotal.innerText = 'Rp 0';
                 teksTotal.innerText = 'Rp 0';
-                btnBayar.disabled = true; // Matikan tombol jika keranjang kosong
+                btnBayar.disabled = true;
                 return;
             }
 
-            btnBayar.disabled = false; // Aktifkan tombol
-
+            btnBayar.disabled = false;
             dataKeranjang.forEach(item => {
                 totalHitung += parseInt(item.harga);
                 wadahCheckout.innerHTML += `
@@ -501,44 +474,40 @@
                                 <i class="fa-regular fa-trash-can"></i> Hapus
                             </button>
                         </div>
-                    </div>
-                `;
+                    </div>`;
             });
 
             teksSubtotal.innerText = formatRupiah(totalHitung);
             teksTotal.innerText = formatRupiah(totalHitung);
         }
 
-        // Fungsi untuk menghapus item
         function hapusDariKeranjang(id) {
-            // Saring array, sisakan yang id-nya BUKAN id yang dihapus
-            dataKeranjang = dataKeranjang.filter(item => item.id !== id);
-            // Simpan pembaruan ke localStorage
-            localStorage.setItem('cbb_cart', JSON.stringify(dataKeranjang));
-            // Tampilkan ulang
+            dataKeranjang = dataKeranjang.filter(item => String(item.id) !== String(id));
+            localStorage.setItem('metagama_cart', JSON.stringify(dataKeranjang));
             tampilkanKeranjang();
-            // Panggil update badge dari cart.js jika ada
             if (typeof updateBadgeKeranjang === 'function') updateBadgeKeranjang();
         }
 
-        // Jalankan saat pertama kali dibuka
+        // Auto-isi nama & email dari user yang login
+        const userAwal = JSON.parse(localStorage.getItem('metagama_user'));
+        if (userAwal) {
+            document.getElementById('nama_pembeli').value = userAwal.name || '';
+            document.getElementById('email_pembeli').value = userAwal.email || '';
+        }
+
         tampilkanKeranjang();
 
-        // Proses Pembayaran Asli ke Database Backend
+        // Proses pembayaran ke backend
         document.getElementById('form-pembayaran').addEventListener('submit', async function (e) {
-            e.preventDefault(); // Mencegah halaman refresh
+            e.preventDefault();
 
-            // Mengambil data user yang sedang login dari localStorage
-            const userLogon = JSON.parse(localStorage.getItem('cbb_user'));
-
-            // Proteksi: Jika pembeli belum login, paksa dia login dulu sebelum bayar
+            const userLogon = JSON.parse(localStorage.getItem('metagama_user'));
             if (!userLogon) {
                 alert('Silakan login terlebih dahulu untuk melanjutkan pembayaran agar produk masuk ke akun Anda!');
                 window.location.href = '/login.html';
                 return;
             }
 
-            const btnBayar = document.getElementById('btn-bayar');
             btnBayar.innerText = 'Memproses...';
             btnBayar.disabled = true;
 
@@ -550,22 +519,20 @@
             };
 
             try {
-                const response = await fetch('http://localhost:5000/api/checkout', {
+                // API RELATIF (bukan localhost)
+                const response = await fetch('/api/checkout', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(dataTransaksi)
                 });
-
                 const result = await response.json();
 
                 if (response.ok) {
-                    alert(`Pembayaran Sukses!\nProduk digital Anda telah aktif dan siap diunduh di halaman Dashboard.`);
-
-                    // Kosongkan keranjang belanja karena sudah dibeli
-                    localStorage.removeItem('cbb_cart');
+                    alert('Pembayaran Sukses!\nProduk digital Anda telah aktif dan siap diunduh di halaman Dashboard.');
+                    // Bersihkan keranjang dengan KEY YANG BENAR
+                    localStorage.removeItem('metagama_cart');
                     dataKeranjang = [];
-
-                    // Arahkan langsung ke halaman Dashboard Pelanggan
+                    if (typeof updateBadgeKeranjang === 'function') updateBadgeKeranjang();
                     window.location.href = '/dashboard.html';
                 } else {
                     alert(result.error);
@@ -579,9 +546,7 @@
             }
         });
     </script>
-
     <script src="/cart.js"></script>
-
 </body>
 
 </html>

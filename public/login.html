@@ -10,7 +10,6 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* --- RESET & VARIABLES --- */
         * {
             margin: 0;
             padding: 0;
@@ -37,7 +36,6 @@
             color: inherit;
         }
 
-        /* --- HEADER --- */
         header {
             border-bottom: 1px solid var(--border-color);
             padding: 15px 0;
@@ -113,7 +111,6 @@
             border-radius: 50%;
         }
 
-        /* --- AUTH LAYOUT --- */
         .auth-container {
             max-width: 1000px;
             margin: 80px auto;
@@ -199,7 +196,6 @@
             transform: translateY(-2px);
         }
 
-        /* --- FOOTER --- */
         footer {
             background-color: var(--bg-gray);
             padding: 60px 20px 20px;
@@ -276,7 +272,6 @@
 </head>
 
 <body>
-
     <header>
         <div class="nav-container">
             <div class="logo">
@@ -301,13 +296,10 @@
         </div>
     </header>
 
-
     <main class="auth-container">
-
         <div class="auth-box">
             <h2 class="auth-title">Masuk</h2>
             <p class="auth-desc">Masuk ke akun Anda untuk melihat pesanan dan mengunduh produk digital Anda.</p>
-
             <form id="form-login">
                 <div class="form-group">
                     <label for="login-email">Alamat Email *</label>
@@ -325,7 +317,6 @@
             <h2 class="auth-title">Daftar Baru</h2>
             <p class="auth-desc">Membuat akun sangat mudah dan cepat. Dapatkan akses penuh ke direktori lisensi kami.
             </p>
-
             <form id="form-register">
                 <div class="form-group">
                     <label for="reg-name">Nama Lengkap *</label>
@@ -342,7 +333,6 @@
                 <button type="submit" class="btn-auth" style="background: #333;">DAFTAR SEKARANG</button>
             </form>
         </div>
-
     </main>
 
     <footer>
@@ -356,16 +346,17 @@
                 <p>Tanjung Duren, Grogol, Adm. Jakarta Barat, </p>
                 <p>Provinsi DKI Jakarta, 12560</p>
                 <br>
-                <p><a href="mailto:metagamapersada.pt@gmail.com" class="footer-contact-link"><i
-                            class="fa-solid fa-envelope"></i> metagamapersada.pt@gmail.com</a></p>
-                <p><a href="https://wa.me/6281288098298" target="_blank" class="footer-contact-link"><i
-                            class="fa-brands fa-whatsapp" style="font-size:16px;"></i> +62812 8809 8298</a></p>
+                <p><a href="mailto:metagamapersada.pt@gmail.com"><i class="fa-solid fa-envelope"></i>
+                        metagamapersada.pt@gmail.com</a></p>
+                <p><a href="https://wa.me/6281288098298" target="_blank"><i class="fa-brands fa-whatsapp"
+                            style="font-size:16px;"></i> +62812 8809 8298</a></p>
             </div>
             <div class="footer-links">
                 <h3>Attention</h3>
                 <ul>
-                    <li><a href="/terms.html" class="footer-contact-link">Terms & Condition</a></li>
-                    <li><a href="/privacy.html" class="footer-contact-link">Privacy Policy</a></li>
+                    <li><a href="/terms.html">Terms & Condition</a></li>
+                    <li><a href="/privacy.html">Privacy Policy</a></li>
+                </ul>
             </div>
         </div>
         <div class="footer-bottom">
@@ -376,69 +367,63 @@
     </footer>
 
     <script>
-        // --- LOGIKA DAFTAR (REGISTER) ---
+        // --- DAFTAR (REGISTER) ---
         document.getElementById('form-register').addEventListener('submit', async function (e) {
-            e.preventDefault(); // Mencegah reload
-
+            e.preventDefault();
             const name = document.getElementById('reg-name').value;
             const email = document.getElementById('reg-email').value;
             const password = document.getElementById('reg-password').value;
-
             try {
                 const response = await fetch('/api/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ name, email, password })
                 });
-
                 const result = await response.json();
-
                 if (response.ok) {
-                    alert(result.message); // Notifikasi sukses
-                    this.reset(); // Kosongkan form daftar
+                    alert(result.message);
+                    this.reset();
                 } else {
-                    alert(result.error); // Notifikasi gagal (misal: email sudah ada)
+                    alert(result.error);
                 }
             } catch (error) {
                 alert('Terjadi kesalahan koneksi ke server.');
             }
         });
 
-        // --- LOGIKA MASUK (LOGIN) ---
+        // --- MASUK (LOGIN) ---
         document.getElementById('form-login').addEventListener('submit', async function (e) {
             e.preventDefault();
-
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
-
             try {
                 const response = await fetch('/api/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, password })
                 });
-
                 const result = await response.json();
-
                 if (response.ok) {
                     alert('Berhasil masuk! Selamat datang, ' + result.user.name);
+                    // KEY KONSISTEN: metagama_user
+                    localStorage.setItem('metagama_user', JSON.stringify(result.user));
 
-                    // Simpan data user ke memori browser (sebagai "kunci" bahwa dia sedang login)
-                    localStorage.setItem('cbb_user', JSON.stringify(result.user));
-
-                    // Arahkan ke halaman Dashboard (yang akan kita buat selanjutnya)
-                    window.location.href = '/dashboard.html';
+                    // Kalau keranjang ada isinya -> lanjut ke checkout, jika tidak -> dashboard
+                    const keranjang = JSON.parse(localStorage.getItem('metagama_cart')) || [];
+                    if (keranjang.length > 0) {
+                        window.location.href = '/checkout.html';
+                    } else {
+                        window.location.href = '/dashboard.html';
+                    }
                 } else {
-                    alert(result.error); // Password/Email salah
+                    alert(result.error);
                 }
             } catch (error) {
                 alert('Terjadi kesalahan koneksi ke server.');
             }
         });
     </script>
-
     <script src="/cart.js"></script>
-
 </body>
 
 </html>

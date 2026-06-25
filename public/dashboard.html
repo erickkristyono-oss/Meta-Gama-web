@@ -10,7 +10,6 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* --- RESET & VARIABLES --- */
         * {
             margin: 0;
             padding: 0;
@@ -37,7 +36,6 @@
             color: inherit;
         }
 
-        /* --- HEADER --- */
         header {
             border-bottom: 1px solid var(--border-color);
             padding: 15px 0;
@@ -112,7 +110,6 @@
             border-radius: 50%;
         }
 
-        /* --- DASHBOARD LAYOUT --- */
         .dashboard-container {
             max-width: 1200px;
             margin: 60px auto;
@@ -123,7 +120,6 @@
             min-height: 50vh;
         }
 
-        /* Sidebar Menu */
         .dash-sidebar {
             width: 250px;
             background: var(--bg-gray);
@@ -185,7 +181,6 @@
             border-left: 4px solid var(--primary-green);
         }
 
-        /* Main Content */
         .dash-content {
             flex: 1;
         }
@@ -206,7 +201,6 @@
             font-size: 14px;
         }
 
-        /* Info Cards */
         .info-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -248,7 +242,6 @@
             color: var(--text-gray);
         }
 
-        /* Downloads Table */
         .table-wrapper {
             background: white;
             border: 1px solid var(--border-color);
@@ -298,7 +291,6 @@
             background: #6d823e;
         }
 
-        /* --- FOOTER --- */
         footer {
             background-color: var(--bg-gray);
             padding: 60px 20px 20px;
@@ -383,12 +375,9 @@
 </head>
 
 <body>
-
     <script>
-        // Cek apakah ada data pengguna yang sedang login di memori browser
-        const userData = JSON.parse(localStorage.getItem('cbb_user'));
-
-        // Jika tidak ada data login, paksa pengguna kembali ke halaman login
+        // Cek login (KEY KONSISTEN: metagama_user)
+        const userData = JSON.parse(localStorage.getItem('metagama_user'));
         if (!userData) {
             alert('Akses Ditolak! Anda harus login terlebih dahulu.');
             window.location.href = '/login.html';
@@ -419,9 +408,7 @@
         </div>
     </header>
 
-
     <div class="dashboard-container">
-
         <aside class="dash-sidebar">
             <div class="user-profile-mini">
                 <div class="user-avatar"><i class="fa-regular fa-user"></i></div>
@@ -448,14 +435,14 @@
                 <div class="info-card">
                     <div class="info-icon"><i class="fa-solid fa-box-open"></i></div>
                     <div class="info-data">
-                        <h3>0</h3>
+                        <h3 id="stat-total">0</h3>
                         <p>Total Pesanan</p>
                     </div>
                 </div>
                 <div class="info-card">
                     <div class="info-icon"><i class="fa-solid fa-download"></i></div>
                     <div class="info-data">
-                        <h3>0</h3>
+                        <h3 id="stat-file">0</h3>
                         <p>File Tersedia</p>
                     </div>
                 </div>
@@ -488,7 +475,6 @@
                 </table>
             </div>
         </main>
-
     </div>
 
     <footer>
@@ -502,16 +488,17 @@
                 <p>Tanjung Duren, Grogol, Adm. Jakarta Barat, </p>
                 <p>Provinsi DKI Jakarta, 12560</p>
                 <br>
-                <p><a href="mailto:metagamapersada.pt@gmail.com" class="footer-contact-link"><i
-                            class="fa-solid fa-envelope"></i> metagamapersada.pt@gmail.com</a></p>
-                <p><a href="https://wa.me/6281288098298" target="_blank" class="footer-contact-link"><i
-                            class="fa-brands fa-whatsapp" style="font-size:16px;"></i> +62812 8809 8298</a></p>
+                <p><a href="mailto:metagamapersada.pt@gmail.com"><i class="fa-solid fa-envelope"></i>
+                        metagamapersada.pt@gmail.com</a></p>
+                <p><a href="https://wa.me/6281288098298" target="_blank"><i class="fa-brands fa-whatsapp"
+                            style="font-size:16px;"></i> +62812 8809 8298</a></p>
             </div>
             <div class="footer-links">
                 <h3>Attention</h3>
                 <ul>
-                    <li><a href="/terms.html" class="footer-contact-link">Terms & Condition</a></li>
-                    <li><a href="/privacy.html" class="footer-contact-link">Privacy Policy</a></li>
+                    <li><a href="/terms.html">Terms & Condition</a></li>
+                    <li><a href="/privacy.html">Privacy Policy</a></li>
+                </ul>
             </div>
         </div>
         <div class="footer-bottom">
@@ -521,32 +508,29 @@
         </div>
     </footer>
 
-
     <script>
-        // Memasukkan nama dan email user dari localStorage ke dalam tampilan HTML
         if (userData) {
             document.getElementById('welcome-name').innerText = userData.name;
             document.getElementById('display-name').innerText = userData.name;
             document.getElementById('display-email').innerText = userData.email;
-
-            // Panggil fungsi untuk mengambil data unduhan dari database
             muatDataUnduhan(userData.id);
         }
 
-        // Fungsi mengambil data riwayat unduhan pelanggan dari API
         async function muatDataUnduhan(userId) {
             try {
-                const response = await fetch(`http://localhost:5000/api/downloads/${userId}`);
+                // API RELATIF (bukan localhost)
+                const response = await fetch(`/api/downloads/${userId}`);
                 const orders = await response.json();
-
                 const tbody = document.getElementById('download-list');
 
                 if (orders.length > 0) {
-                    tbody.innerHTML = ''; // Kosongkan pesan kosong bawaan
+                    // Update angka statistik
+                    document.getElementById('stat-total').innerText = orders.length;
+                    document.getElementById('stat-file').innerText = orders.length;
 
+                    tbody.innerHTML = '';
                     orders.forEach(order => {
                         const tanggalFormated = new Date(order.order_date).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
-
                         tbody.innerHTML += `
                             <tr>
                                 <td style="color:#666; font-weight:500;">#TRX-${order.id}</td>
@@ -558,12 +542,11 @@
                                 </td>
                                 <td style="color:#777;">${tanggalFormated}</td>
                                 <td>
-                                    <a href="#" class="btn-download" onclick="alert('Mengunduh file script/asset untuk ${order.product_name}...\\nTerima kasih telah berbelanja!')">
+                                    <a href="#" class="btn-download" onclick="alert('Mengunduh file untuk ${order.product_name}...\\nTerima kasih telah berbelanja!')">
                                         <i class="fa-solid fa-download"></i> Download File
                                     </a>
                                 </td>
-                            </tr>
-                        `;
+                            </tr>`;
                     });
                 }
             } catch (error) {
@@ -571,19 +554,16 @@
             }
         }
 
-        // Fungsi Logout
         function prosesLogout() {
-            const konfirmasi = confirm('Apakah Anda yakin ingin keluar dari akun?');
-            if (konfirmasi) {
-                localStorage.removeItem('cbb_user');
+            if (confirm('Apakah Anda yakin ingin keluar dari akun?')) {
+                // KEY KONSISTEN: metagama_user
+                localStorage.removeItem('metagama_user');
                 alert('Anda telah berhasil keluar.');
                 window.location.href = '/login.html';
             }
         }
     </script>
-
     <script src="/cart.js"></script>
-
 </body>
 
 </html>
