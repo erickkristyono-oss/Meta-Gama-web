@@ -287,6 +287,136 @@
             cursor: not-allowed;
         }
 
+        /* --- MODAL POPUP TRANSFER --- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-box {
+            background: white;
+            border-radius: 12px;
+            max-width: 460px;
+            width: 100%;
+            padding: 35px 30px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            animation: munculModal 0.3s ease;
+        }
+
+        @keyframes munculModal {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-icon {
+            width: 70px;
+            height: 70px;
+            background: #f0f4e6;
+            color: var(--primary-green);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 32px;
+            margin: 0 auto 20px;
+        }
+
+        .modal-box h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            color: #111;
+            margin-bottom: 12px;
+        }
+
+        .modal-box p.modal-desc {
+            font-size: 14px;
+            color: var(--text-gray);
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .modal-nominal {
+            background: var(--bg-gray);
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+
+        .modal-nominal .label {
+            font-size: 13px;
+            color: var(--text-gray);
+            margin-bottom: 5px;
+        }
+
+        .modal-nominal .nominal {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-green);
+        }
+
+        .modal-bank {
+            text-align: left;
+            border: 1px dashed #ccc;
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .modal-bank .bank-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .modal-bank .bank-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .modal-bank .bank-label {
+            color: var(--text-gray);
+        }
+
+        .modal-bank .bank-value {
+            font-weight: 600;
+            color: #111;
+        }
+
+        .btn-modal-close {
+            width: 100%;
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+
+        .btn-modal-close:hover {
+            background: #6d823e;
+        }
+
         footer {
             background-color: var(--bg-gray);
             padding: 60px 20px 20px;
@@ -402,6 +532,44 @@
         </div>
     </div>
 
+    <!-- ====== MODAL POPUP INSTRUKSI TRANSFER ====== -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-icon"><i class="fa-solid fa-building-columns"></i></div>
+            <h2>Pesanan Diterima!</h2>
+            <p class="modal-desc">
+                File produk digital akan dikirim apabila Anda sudah mentransfer sesuai nominal
+                ke rekening yang ditentukan oleh <strong>PT META GAMA PERSADA</strong>.
+            </p>
+
+            <div class="modal-nominal">
+                <div class="label">Total yang harus ditransfer</div>
+                <div class="nominal" id="modal-total">Rp 0</div>
+            </div>
+
+            <!-- ====== GANTI DATA REKENING DI BAWAH INI ====== -->
+            <div class="modal-bank">
+                <div class="bank-row">
+                    <span class="bank-label">Bank</span>
+                    <span class="bank-value">Bank</span>
+                </div>
+                <div class="bank-row">
+                    <span class="bank-label">No. Rekening</span>
+                    <span class="bank-value">1234567890</span>
+                </div>
+                <div class="bank-row">
+                    <span class="bank-label">Atas Nama</span>
+                    <span class="bank-value">PT META GAMA PERSADA</span>
+                </div>
+            </div>
+            <!-- ====== AKHIR DATA REKENING ====== -->
+
+            <button class="btn-modal-close" onclick="tutupModalDanLanjut()">
+                Saya Mengerti, Lanjut ke Dashboard
+            </button>
+        </div>
+    </div>
+
     <footer>
         <div class="footer-container">
             <div class="footer-logo">
@@ -497,7 +665,12 @@
 
         tampilkanKeranjang();
 
-        // Proses pembayaran ke backend
+        // Tombol modal -> ke dashboard
+        function tutupModalDanLanjut() {
+            window.location.href = '/dashboard.html';
+        }
+
+        // Proses pembayaran: catat pesanan + tampilkan popup instruksi transfer
         document.getElementById('form-pembayaran').addEventListener('submit', async function (e) {
             e.preventDefault();
 
@@ -519,7 +692,7 @@
             };
 
             try {
-                // API RELATIF (bukan localhost)
+                // Catat pesanan ke database (status menunggu transfer)
                 const response = await fetch('/api/checkout', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -528,12 +701,16 @@
                 const result = await response.json();
 
                 if (response.ok) {
-                    alert('Pembayaran Sukses!\nProduk digital Anda telah aktif dan siap diunduh di halaman Dashboard.');
-                    // Bersihkan keranjang dengan KEY YANG BENAR
+                    // Tampilkan nominal total di modal SEBELUM cart dikosongkan
+                    document.getElementById('modal-total').innerText = teksTotal.innerText;
+
+                    // Munculkan popup instruksi transfer
+                    document.getElementById('modal-overlay').style.display = 'flex';
+
+                    // Bersihkan keranjang
                     localStorage.removeItem('metagama_cart');
                     dataKeranjang = [];
                     if (typeof updateBadgeKeranjang === 'function') updateBadgeKeranjang();
-                    window.location.href = '/dashboard.html';
                 } else {
                     alert(result.error);
                     btnBayar.innerText = 'PROSES PEMBAYARAN';
